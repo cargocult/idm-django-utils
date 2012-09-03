@@ -197,9 +197,10 @@ class ObfuscatedIdField(models.CharField):
 
     def _post_save(self, sender, instance, *args, **kws):
         """
-        Update this field, if we didn't do it in pre_save.
+        Update this field, if we didn't do it in pre_save and not
+        loading fixtures (see http://stackoverflow.com/q/2604800).
         """
-        if kws.get('created'):
+        if kws.get('created') and not kws.get('raw', False):
             # Make sure we have a source field now.
             source_val = getattr(instance, self.source_field)
             assert source_val, _(
