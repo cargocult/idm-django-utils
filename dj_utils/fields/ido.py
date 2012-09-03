@@ -203,7 +203,7 @@ class ObfuscatedIdField(models.CharField):
         if kws.get('created') and not kws.get('raw', False):
             # Make sure we have a source field now.
             source_val = getattr(instance, self.source_field)
-            assert source_val, _(
+            assert source_val, (
                 "The source field '%s' was never set, "
                 "could not create an obfuscated it" % self.source_field
                 )
