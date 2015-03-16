@@ -215,6 +215,19 @@ class ObfuscatedIdField(models.CharField):
             # Do another save to save the oid.
             instance.save(using=kws.get('using'))
 
+    def deconstruct(self):
+        """
+        Support for django migrations
+        """
+        name, path, args, kwargs = super(ObfuscatedIdField, self).deconstruct()
+        kwargs['seed'] = self.ido.seed
+        kwargs['bits'] = self.ido.bits
+        if self.source_field is not None:
+            kwargs['source_field'] = self.source_field
+        if not self.ido.code_chars == IdObfuscator.DEFAULT_CODE_CHARS:
+            kwargs['code_chars'] = self.code_chars
+        return name, path, args, kwargs
+
 
 # If we're using south for schema migration, then register this field.
 try:
