@@ -109,11 +109,6 @@ give it a number of bits (normally 35 for a full 32-bit integer
 precision, smaller if you want the code to be smaller), and it stores
 and indexes the resulting id.
 
-### Pickle fields
-
-This a way to store arbitrary data structures in Django and it
-provides automatic deserialization and serialization.
-
 ### Password field
 
 This replicates much of the machinery of the password field used in
