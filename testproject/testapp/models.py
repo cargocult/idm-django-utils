@@ -3,7 +3,6 @@ from django.db import models
 import dj_utils.fields as dj_fields
 
 class TestModel(models.Model):
-    json_data = dj_fields.json.JSONField()
     pickle_data = dj_fields.pickle.PickledObjectField()
     uuid = dj_fields.uuid.UUIDField()
     restricted_slug = dj_fields.slug.RestrictedSlugField()
