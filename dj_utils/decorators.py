@@ -98,7 +98,7 @@ class _JSONToHTML(object):
             _JSONToHTML._output_object(response, data)
         elif data in (True, False):
             _JSONToHTML._output_boolean(response, data)
-        elif isinstance(data, basestring):
+        elif isinstance(data, str):
             _JSONToHTML._output_string(response, data)
         elif data is None:
             _JSONToHTML._output_null(response, data)
@@ -213,7 +213,7 @@ def report_errors(fn):
     def _wrapper(request, *args, **kws):
         try:
             return fn(request, *args, **kws)
-        except BaseException, err:
+        except BaseException as err:
             traceback.print_exc(file=sys.stderr)
     return _wrapper
 

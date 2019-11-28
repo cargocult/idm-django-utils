@@ -42,7 +42,7 @@ class Choices(object):
         # Any other keyword argument we ignore.
         if kws:
             raise ArgumentError(
-                "No such keyword argument: '%s'" % kws.keys()[0]
+                "No such keyword argument: '%s'" % list(kws.keys())[0]
                 )
 
         self._choice_data = choice_data
@@ -60,7 +60,7 @@ class Choices(object):
         for trip in choice_data:
             if len(trip) > 3:
                 self._val2data[trip[0]] = trip[3]
-                for key, val in trip[3].items():
+                for key, val in list(trip[3].items()):
                     self._data2val[key][val] = trip[0]
             else:
                 self._val2data[trip[0]] = dict()

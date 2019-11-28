@@ -51,7 +51,7 @@ class IdObfuscator(object):
 
         # Consistently shuffle the bits in the xors we came up with.
         xors = []
-        mapping = range(bits)
+        mapping = list(range(bits))
         rnd.shuffle(mapping)
         for x in xor_temp:
             v = 0

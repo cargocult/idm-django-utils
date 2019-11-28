@@ -1,3 +1,3 @@
 from django.test import TestCase
 
-import models
+from . import models

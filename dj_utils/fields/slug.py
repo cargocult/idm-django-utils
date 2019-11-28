@@ -13,9 +13,9 @@ import django.core.validators as validators
 from django.utils.translation import ugettext as _
 
 default_error = _(
-    u"Slugs must consist of lower case letters, numbers and hyphens, starting "
-    u"and ending with a letter or a number. The slug may not "
-    u"contain two or more consecutive hyphens."
+    "Slugs must consist of lower case letters, numbers and hyphens, starting "
+    "and ending with a letter or a number. The slug may not "
+    "contain two or more consecutive hyphens."
     )
 
 # This can be used in place of django.core.validators.slug_re
