@@ -1,4 +1,4 @@
-import ido
-import uuid_field as uuid
-import password_field as password
-import slug
+from . import ido
+from . import uuid_field as uuid
+from . import password_field as password
+from . import slug

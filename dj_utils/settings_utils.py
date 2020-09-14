@@ -19,7 +19,7 @@ def environment():
             else:
                 _id = 'development'
                 import textwrap
-                print '\n'.join(textwrap.wrap(textwrap.dedent("""
+                print('\n'.join(textwrap.wrap(textwrap.dedent("""
                     Running as development server with machine id
                     '%s'. You should set this explicitly. The best way
                     is to set the DJANGO_MACHINE_ID environment
@@ -30,7 +30,7 @@ def environment():
                     directory, or in sys.path: the environment
                     variable setting takes priority, then the paths
                     are searched in that order.
-                    """ % _id), 76))
+                    """ % _id), 76)))
     return _id
 
 def config(default=None, environment=environment(), **values):
