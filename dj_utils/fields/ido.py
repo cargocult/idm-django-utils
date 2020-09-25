@@ -1,4 +1,5 @@
 import random
+from math import log
 
 from django.db import models
 import django.dispatch as dispatcher
@@ -37,7 +38,7 @@ class IdObfuscator(object):
         """
         # Initialise our random number generator
         rnd = random.Random()
-        rnd.seed(seed)
+        rnd.seed(seed, version=1)
 
         # Create random integers with successively higher number of
         # digits, and always with a 1 in the most significant bit. We
@@ -45,14 +46,14 @@ class IdObfuscator(object):
         # combination of others (i.e. the xor matrix is non-singular),
         # and therefore there can't be any collisions.
         xor_temp = [
-            (1 << i) + rnd.randint(0, (1 << i) - 1)
+            (1 << i) + IdObfuscator._py2randint(rnd, 0, (1 << i) - 1)
             for i in range(bits+1)
             ]
 
         # Consistently shuffle the bits in the xors we came up with.
         xors = []
         mapping = list(range(bits))
-        rnd.shuffle(mapping)
+        rnd.shuffle(mapping, rnd.random)
         for x in xor_temp:
             v = 0
             for i in range(bits):
@@ -68,6 +69,22 @@ class IdObfuscator(object):
         ido = IdObfuscator(xors)
         ido.seed = seed
         return ido
+
+    @staticmethod
+    def _py2randint(rnd, istart, b):
+        _maxwidth = 1 << 53
+        width = b - istart
+        if width >= _maxwidth:
+            return int(istart + IdObfuscator._py2randbelow(rnd, width))
+        return int(istart + int(rnd.random()*width))
+
+    @staticmethod
+    def _py2randbelow(rnd, n):
+        k = int(1.00001 + log(n-1, 2.0))   # 2**k > n-1 > 2**(k-2)
+        r = rnd.getrandbits(k)
+        while r >= n:
+            r = rnd.getrandbits(k)
+        return r
 
     def __init__(self, xors, code_chars=None):
         """
