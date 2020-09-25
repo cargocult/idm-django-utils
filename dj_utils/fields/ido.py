@@ -73,7 +73,8 @@ class IdObfuscator(object):
     @staticmethod
     def _py2randint(rnd, istart, b):
         _maxwidth = 1 << 53
-        width = b - istart
+        istop = b + 1
+        width = istop - istart
         if width >= _maxwidth:
             return int(istart + IdObfuscator._py2randbelow(rnd, width))
         return int(istart + int(rnd.random()*width))
