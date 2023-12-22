@@ -10,7 +10,7 @@ import re
 import django.db.models as models
 import django.forms as forms
 import django.core.validators as validators
-from django.utils.translation import ugettext as _
+from django.utils.translation import gettext as _
 
 default_error = _(
     "Slugs must consist of lower case letters, numbers and hyphens, starting "
