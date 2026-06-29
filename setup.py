@@ -5,7 +5,7 @@ from distutils.core import setup
 setup(
     name='django-utils',
 
-    version='0.4.2',
+    version='0.5.1',
     author='Ian Millington',
     author_email='idmillington@googlemail.com',
 

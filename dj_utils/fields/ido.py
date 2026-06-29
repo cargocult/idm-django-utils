@@ -1,5 +1,5 @@
 import random
-from math import log
+from math import log, floor
 
 from django.db import models
 import django.dispatch as dispatcher
@@ -53,7 +53,16 @@ class IdObfuscator(object):
         # Consistently shuffle the bits in the xors we came up with.
         xors = []
         mapping = list(range(bits))
-        rnd.shuffle(mapping, rnd.random)
+        # We used to use `rnd.shuffle(mapping, rnd.random)` to use the
+        # Python 2 algorithm, but this was removed in Python 3.11. So,
+        # use inline equivalent code that we know is stable.
+        for i in reversed(range(1, len(mapping))):
+            # Pick an element in tests[:i+1] with which to exchange
+            # tests[i].  math.floor returns a float on Python 2, so we
+            # need int() until we drop Python 2 support.
+            j = floor(rnd.random() * (i + 1))
+            mapping[i], mapping[j] = mapping[j], mapping[i]
+ 
         for x in xor_temp:
             v = 0
             for i in range(bits):
